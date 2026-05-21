@@ -1,0 +1,92 @@
+{
+	"info": {
+		"_postman_id": "satusehat-oauth2-collection",
+		"name": "SATUSEHAT OAuth2 API",
+		"description": "Collection untuk testing SATUSEHAT OAuth2 endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OAuth2",
+			"item": [
+				{
+					"name": "Get Access Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/oauth2/token",
+							"host": ["{{base_url}}"],
+							"path": ["api", "oauth2", "token"]
+						},
+						"description": "Get access token dari SATUSEHAT OAuth2 server"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Access Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/oauth2/refresh",
+							"host": ["{{base_url}}"],
+							"path": ["api", "oauth2", "refresh"]
+						},
+						"description": "Refresh access token (force new request)"
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/oauth2/validate",
+							"host": ["{{base_url}}"],
+							"path": ["api", "oauth2", "validate"]
+						},
+						"description": "Validate apakah token masih valid"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
