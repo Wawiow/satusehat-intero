@@ -1,0 +1,40 @@
+@baseUrl = http://localhost:8080/api
+@token = your_token_here
+
+### Get Token
+POST {{baseUrl}}/token
+Content-Type: application/json
+
+### Get Patient by NIK and Name
+# You must provide both NIK and Name as per SatuSehat requirements
+GET {{baseUrl}}/patients?nik=9104025209000006&name=Salsabilla%20Anjani%20Rizki
+Content-Type: application/json
+
+### Get Practitioner by NIK
+# Currently Not Working duhlah
+GET {{baseUrl}}/practitioners?nik=1000000000000002
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Create Patient
+# Can create but cant fetch the newly created patient hmmmm
+POST {{baseUrl}}/patients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nik": "12300000000004",
+  "name": "Dua Tiga Ayam",
+  "gender": "male",
+  "birth_date": "1945-08-17",
+  "phone": "081234565431",
+  "address": "Gd. Prof. Dr. Sujudi Lt.5, Jl. H.R. Rasuna Said Blok X5 Kav. 4-9 Kuningan",
+  "city": "Jakarta",
+  "province_code": "32",
+  "city_code": "3212",
+  "district_code": "321212",
+  "village_code": "3212122013",
+  "rt": "50",
+  "rw": "4",
+  "postal_code": "12950"
+}
