@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:8083/api
-@token = x90UL3rtDPJezVIQAAbWyYG8BsuS
+@token = AEH08LzlAz3KH9hVAVdEHadv67eT
 
 ### Get Patient by NIK and Name
 GET {{baseUrl}}/patients?nik=9104025209000006&name=Salsabilla%20Anjani%20Rizki
