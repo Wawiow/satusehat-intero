@@ -28,8 +28,23 @@ func InitDB(filepath string) (*sql.DB, error) {
 		return nil, fmt.Errorf("failed to initialize tables: %w", err)
 	}
 
+	// Test database connectivity
+	if err := testDatabase(db); err != nil {
+		return nil, fmt.Errorf("failed to test database: %w", err)
+	}
+
 	log.Printf("Successfully connected to SQLite database at: %s", filepath)
 	return db, nil
+}
+
+func testDatabase(db *sql.DB) error {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM patients").Scan(&count)
+	if err != nil {
+		return fmt.Errorf("failed to query patients table: %w", err)
+	}
+	log.Printf("Database test successful. Current patients count: %d", count)
+	return nil
 }
 
 func initTables(db *sql.DB) error {

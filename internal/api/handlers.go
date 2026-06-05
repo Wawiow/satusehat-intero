@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -118,7 +119,8 @@ func (h *Handlers) GetToken(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) GetAllLocalPatients(w http.ResponseWriter, r *http.Request) {
 	patients, err := getAllPatientsLocal(h.db)
 	if err != nil {
-		respondError(w, http.StatusInternalServerError, "failed to fetch local patients")
+		log.Printf("Error fetching local patients: %v", err)
+		respondError(w, http.StatusInternalServerError, "failed to fetch local patients: "+err.Error())
 		return
 	}
 	respondJSON(w, http.StatusOK, patients)

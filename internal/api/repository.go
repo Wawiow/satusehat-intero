@@ -45,6 +45,9 @@ func getAllPatientsLocal(db *sql.DB) ([]PersonResponse, error) {
 		}
 		patients = append(patients, p)
 	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
 	return patients, nil
 }
 
@@ -86,6 +89,9 @@ func getAllLocationsLocal(db *sql.DB) ([]LocationResponse, error) {
 			return nil, err
 		}
 		locs = append(locs, loc)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
 	}
 	return locs, nil
 }
@@ -142,6 +148,9 @@ func getAllEncountersLocal(db *sql.DB) ([]EncounterResponse, error) {
 			return nil, err
 		}
 		encs = append(encs, enc)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
 	}
 	return encs, nil
 }
