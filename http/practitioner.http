@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:8083/api
+@token = x90UL3rtDPJezVIQAAbWyYG8BsuS
+
+### Get Practitioner by NIK
+GET {{baseUrl}}/practitioners?nik=1204010202950004
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Get Practitioner by ID
+GET {{baseUrl}}/practitioners?id=10008465328
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Get Practitioner by Name, Gender, and Birthdate (Unmasked)
+GET {{baseUrl}}/practitioners?name=dr. Alexander&gender=male&birthdate=1995-02-02
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Get Practitioner by NIK and Name
+GET {{baseUrl}}/practitioners?nik=1204010202950004&name=dr. Alexander
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Get Practitioners with Pagination
+GET {{baseUrl}}/practitioners?page=1&limit=5
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Get All Local Practitioners
+GET {{baseUrl}}/local/practitioners
+Content-Type: application/json
+
