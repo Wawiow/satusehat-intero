@@ -18,7 +18,7 @@ func savePatientLocal(db *sql.DB, p PersonResponse) error {
 
 func getPatientLocal(db *sql.DB, nik string) (*PersonResponse, error) {
 	var p PersonResponse
-	query := `SELECT nik, id, ihs_number, name, gender, birth_date, phone, address FROM patients WHERE nik = ?`
+	query := `SELECT nik, COALESCE(id, ''), COALESCE(ihs_number, ''), name, gender, birth_date, COALESCE(phone, ''), COALESCE(address, '') FROM patients WHERE nik = ?`
 	err := db.QueryRow(query, nik).Scan(&p.NIK, &p.ID, &p.IHSNumber, &p.Name, &p.Gender, &p.BirthDate, &p.Phone, &p.Address)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -30,13 +30,12 @@ func getPatientLocal(db *sql.DB, nik string) (*PersonResponse, error) {
 }
 
 func getAllPatientsLocal(db *sql.DB) ([]PersonResponse, error) {
-	query := `SELECT nik, id, ihs_number, name, gender, birth_date, phone, address FROM patients`
+	query := `SELECT nik, COALESCE(id, ''), COALESCE(ihs_number, ''), name, gender, birth_date, COALESCE(phone, ''), COALESCE(address, '') FROM patients`
 	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-
 	var patients []PersonResponse
 	for rows.Next() {
 		var p PersonResponse
@@ -199,7 +198,7 @@ func savePractitionerLocal(db *sql.DB, p PersonResponse) error {
 
 func getPractitionerLocal(db *sql.DB, nik string) (*PersonResponse, error) {
 	var p PersonResponse
-	query := `SELECT nik, id, ihs_number, name, gender, birth_date, phone, address FROM practitioners WHERE nik = ?`
+	query := `SELECT nik, COALESCE(id, ''), COALESCE(ihs_number, ''), name, gender, birth_date, COALESCE(phone, ''), COALESCE(address, '') FROM practitioners WHERE nik = ?`
 	err := db.QueryRow(query, nik).Scan(&p.NIK, &p.ID, &p.IHSNumber, &p.Name, &p.Gender, &p.BirthDate, &p.Phone, &p.Address)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -211,7 +210,7 @@ func getPractitionerLocal(db *sql.DB, nik string) (*PersonResponse, error) {
 }
 
 func getAllPractitionersLocal(db *sql.DB) ([]PersonResponse, error) {
-	query := `SELECT nik, id, ihs_number, name, gender, birth_date, phone, address FROM practitioners`
+	query := `SELECT nik, COALESCE(id, ''), COALESCE(ihs_number, ''), name, gender, birth_date, COALESCE(phone, ''), COALESCE(address, '') FROM practitioners`
 	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
@@ -231,7 +230,7 @@ func getAllPractitionersLocal(db *sql.DB) ([]PersonResponse, error) {
 
 func searchPractitionersLocal(db *sql.DB, id, nik, name, gender, birthDate string, page, limit int) ([]PersonResponse, error) {
 	offset := (page - 1) * limit
-	query := `SELECT nik, id, ihs_number, name, gender, birth_date, phone, address FROM practitioners`
+	query := `SELECT nik, COALESCE(id, ''), COALESCE(ihs_number, ''), name, gender, birth_date, COALESCE(phone, ''), COALESCE(address, '') FROM practitioners`
 	var args []interface{}
 	var conditions []string
 
