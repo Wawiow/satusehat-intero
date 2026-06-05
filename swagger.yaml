@@ -1,0 +1,491 @@
+basePath: /
+definitions:
+  api.CreateEncounterRequest:
+    properties:
+      identifier_value:
+        type: string
+      location_id:
+        type: string
+      practitioner_id:
+        type: string
+      start_time:
+        type: string
+      subject_id:
+        type: string
+    type: object
+  api.CreateLocationRequest:
+    properties:
+      description:
+        type: string
+      identifier_value:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  api.CreatePatientRequest:
+    properties:
+      address:
+        type: string
+      birth_date:
+        type: string
+      city:
+        type: string
+      city_code:
+        type: string
+      district_code:
+        type: string
+      gender:
+        type: string
+      name:
+        type: string
+      nik:
+        type: string
+      phone:
+        type: string
+      postal_code:
+        type: string
+      province_code:
+        type: string
+      rt:
+        type: string
+      rw:
+        type: string
+      village_code:
+        type: string
+    type: object
+  api.EncounterResponse:
+    properties:
+      id:
+        type: string
+      identifier_value:
+        type: string
+      location_id:
+        type: string
+      start_time:
+        type: string
+      status:
+        type: string
+      subject_id:
+        type: string
+    type: object
+  api.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  api.LocationResponse:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      identifier_value:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  api.PersonResponse:
+    properties:
+      address:
+        type: string
+      birth_date:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      ihs_number:
+        type: string
+      name:
+        type: string
+      nik:
+        type: string
+      phone:
+        type: string
+    type: object
+  api.TokenResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  api.UpdateEncounterRequest:
+    properties:
+      status:
+        type: string
+    type: object
+host: localhost:8083
+info:
+  contact: {}
+  description: This is a SatuSehat integration and interoperability API client wrapper.
+  title: SatuSehat Intero API
+  version: "1.0"
+paths:
+  /api/encounters:
+    post:
+      consumes:
+      - application/json
+      description: Create a new encounter in SatuSehat and save locally
+      parameters:
+      - description: Create Encounter Request Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.CreateEncounterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.EncounterResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Create Encounter
+      tags:
+      - Encounters
+  /api/encounters/{id}:
+    get:
+      description: Get encounter by ID from local database or SatuSehat
+      parameters:
+      - description: Encounter ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.EncounterResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get Encounter by ID
+      tags:
+      - Encounters
+    put:
+      consumes:
+      - application/json
+      description: Update the status of an encounter in SatuSehat and locally
+      parameters:
+      - description: Encounter ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Encounter Status Request Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.UpdateEncounterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.EncounterResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Update Encounter Status
+      tags:
+      - Encounters
+  /api/local/encounters:
+    get:
+      description: Retrieve all encounters stored in the local SQLite database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.EncounterResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get All Local Encounters
+      tags:
+      - Encounters
+  /api/local/locations:
+    get:
+      description: Retrieve all locations stored in the local SQLite database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.LocationResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get All Local Locations
+      tags:
+      - Locations
+  /api/local/patients:
+    get:
+      description: Retrieve all patients stored in the local SQLite database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.PersonResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get All Local Patients
+      tags:
+      - Patients
+  /api/local/practitioners:
+    get:
+      description: Get all practitioners stored in the local SQLite database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.PersonResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get All Local Practitioners
+      tags:
+      - Practitioners
+  /api/locations:
+    get:
+      description: Search locations locally or sync from SatuSehat by id or identifier
+      parameters:
+      - description: Location ID
+        in: query
+        name: id
+        type: string
+      - description: Location Identifier
+        in: query
+        name: identifier
+        type: string
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Limit (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.LocationResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get Locations
+      tags:
+      - Locations
+    post:
+      consumes:
+      - application/json
+      description: Create a new location in SatuSehat and save locally
+      parameters:
+      - description: Create Location Request Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.CreateLocationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.LocationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Create Location
+      tags:
+      - Locations
+  /api/patients:
+    get:
+      description: Get patient by NIK. If not found locally, searches SatuSehat (name
+        required for SatuSehat search).
+      parameters:
+      - description: NIK of the patient
+        in: query
+        name: nik
+        required: true
+        type: string
+      - description: Name of the patient (required if searching SatuSehat)
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.PersonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get Patient
+      tags:
+      - Patients
+    post:
+      consumes:
+      - application/json
+      description: Create a new patient in SatuSehat and save locally, or retrieve
+        existing by NIK
+      parameters:
+      - description: Create Patient Request Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.CreatePatientRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.PersonResponse'
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.PersonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Create Patient
+      tags:
+      - Patients
+  /api/practitioners:
+    get:
+      description: Get practitioner details from local DB or search SatuSehat by NIK
+        and/or ID
+      parameters:
+      - description: NIK of the practitioner
+        in: query
+        name: nik
+        type: string
+      - description: ID/IHS number of the practitioner
+        in: query
+        name: id
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of results per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/api.PersonResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get Practitioners
+      tags:
+      - Practitioners
+  /api/token:
+    post:
+      description: Get a fresh OAuth2 bearer token from SatuSehat
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.TokenResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get SatuSehat OAuth Token
+      tags:
+      - Auth
+swagger: "2.0"
