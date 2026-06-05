@@ -1,0 +1,11 @@
+{
+  "name": "satusehat-intero",
+  "private": true,
+  "scripts": {
+    "web:dev": "pnpm --filter @satusehat-intero/web dev",
+    "web:build": "pnpm --filter @satusehat-intero/web build",
+    "web:lint": "pnpm --filter @satusehat-intero/web lint",
+    "web:typecheck": "pnpm --filter @satusehat-intero/web typecheck"
+  },
+  "packageManager": "pnpm@10.11.0"
+}

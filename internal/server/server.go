@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/bukunya/intero-go/internal/api"
 	"github.com/bukunya/intero-go/internal/config"
@@ -36,6 +38,7 @@ func NewServer(cfg *config.Config, db *sql.DB) *http.Server {
 
 	// OK
 	mux.HandleFunc("GET /api/locations", handlers.GetLocations)
+	mux.HandleFunc("GET /api/local/locations", handlers.GetAllLocalLocations)
 	mux.HandleFunc("POST /api/locations", handlers.CreateLocation)
 
 	// Not OK
@@ -48,12 +51,54 @@ func NewServer(cfg *config.Config, db *sql.DB) *http.Server {
 	mux.HandleFunc("POST /api/encounters", handlers.CreateEncounter)
 	mux.HandleFunc("PUT /api/encounters/{id}", handlers.UpdateEncounterStatus)
 
-	handler := loggingMiddleware(mux)
+	handler := corsMiddleware(loggingMiddleware(mux))
 
 	return &http.Server{
 		Addr:    ":8083",
 		Handler: handler,
 	}
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		origin := r.Header.Get("Origin")
+		if isAllowedOrigin(origin) {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			w.Header().Set("Vary", "Origin")
+		}
+
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func isAllowedOrigin(origin string) bool {
+	if origin == "" {
+		return false
+	}
+
+	allowedOrigins := []string{
+		"http://localhost:3000",
+		"http://127.0.0.1:3000",
+	}
+	if rawOrigins := os.Getenv("CORS_ALLOWED_ORIGINS"); rawOrigins != "" {
+		allowedOrigins = strings.Split(rawOrigins, ",")
+	}
+
+	for _, allowedOrigin := range allowedOrigins {
+		allowedOrigin = strings.TrimSpace(allowedOrigin)
+		if allowedOrigin == "*" || allowedOrigin == origin {
+			return true
+		}
+	}
+
+	return false
 }
 
 func loggingMiddleware(next http.Handler) http.Handler {

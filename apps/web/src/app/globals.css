@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.admin-layout {
+  min-height: 100vh;
+}
+
+.admin-sider {
+  background: #ffffff !important;
+  border-right: 1px solid #e6eaf2;
+}
+
+.brand-block {
+  padding: 22px 20px 16px;
+  border-bottom: 1px solid #edf0f6;
+}
+
+.brand-block h4,
+.admin-header h2,
+.data-toolbar h3,
+.json-panel h5 {
+  margin: 0 !important;
+}
+
+.admin-header {
+  height: auto !important;
+  min-height: 96px;
+  padding: 22px 28px !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #e6eaf2;
+  line-height: 1.4 !important;
+}
+
+.admin-content {
+  padding: 24px;
+  background: #f5f7fb;
+}
+
+.screen-stack {
+  display: grid;
+  gap: 18px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.data-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e6eaf2;
+  border-radius: 8px;
+}
+
+.json-panel {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e6eaf2;
+  border-radius: 8px;
+}
+
+.json-panel pre {
+  max-height: 360px;
+  margin: 0;
+  overflow: auto;
+  padding: 14px;
+  background: #111827;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #e6eaf2;
+  border-radius: 8px;
+}
+
+.resource-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.panel {
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e6eaf2;
+  border-radius: 8px;
+}
+
+.form-stack,
+.number-input {
+  width: 100%;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 0 16px;
+}
+
+@media (max-width: 760px) {
+  .admin-header {
+    min-height: auto;
+    padding: 18px !important;
+  }
+
+  .admin-content {
+    padding: 14px;
+  }
+
+  .data-toolbar {
+    display: grid;
+  }
+
+  .table-wrap {
+    width: calc(100vw - 28px);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
