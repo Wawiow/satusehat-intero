@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:8083/api
+@token = x90UL3rtDPJezVIQAAbWyYG8BsuS
+
+### Get Patient by NIK and Name
+GET {{baseUrl}}/patients?nik=9104025209000006&name=Salsabilla%20Anjani%20Rizki
+Content-Type: application/json
+
+### Get Patient by NIK (Local)
+GET {{baseUrl}}/patients?nik=12340000000001
+Content-Type: application/json
+
+### Create Patient
+POST {{baseUrl}}/patients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nik": "12340000000001",
+  "name": "Dua Tiga Ayam Goyeng",
+  "gender": "male",
+  "birth_date": "1945-08-19",
+  "phone": "081234565432",
+  "address": "Gd. Prof. Dr. Sujudi Lt.5, Jl. H.R. Rasuna Said Blok X5 Kav. 4-9 Kuningan",
+  "city": "Jakarta",
+  "province_code": "32",
+  "city_code": "3212",
+  "district_code": "321212",
+  "village_code": "3212122013",
+  "rt": "50",
+  "rw": "4",
+  "postal_code": "12950"
+}
+
+### Get All Local Patients
+GET {{baseUrl}}/local/patients
+Content-Type: application/json

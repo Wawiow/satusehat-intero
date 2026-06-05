@@ -1,0 +1,33 @@
+@baseUrl = http://localhost:8083/api
+@token = x90UL3rtDPJezVIQAAbWyYG8BsuS
+
+### Create Location
+POST {{baseUrl}}/locations
+Content-Type: application/json
+
+{
+  "identifier_value": "G-2-R-1B",
+  "name": "Ruang 1B IRJT",
+  "description": "Ruang 1B, Poliklinik Bedah Rawat Jalan Terpadu, Lantai 2, Gedung G",
+  "phone": "2328"
+}
+
+### Get Location by Identifier
+GET {{baseUrl}}/locations?identifier=G-2-R-1A
+Content-Type: application/json
+
+### Get Location by ID
+GET {{baseUrl}}/locations?id=751ad4c1-76b9-4ae6-a56e-ad627c94793c
+Content-Type: application/json
+
+### Get Location by both ID and Identifier
+GET {{baseUrl}}/locations?id=556e4d8d-6e73-45a2-8283-b73374634c43&identifier=G-2-R-1A
+Content-Type: application/json
+
+### Get Locations with Pagination (default limit 10)
+GET {{baseUrl}}/locations?page=1&limit=5
+Content-Type: application/json
+
+### Get Locations with no limit (limit = -1)
+GET {{baseUrl}}/locations?limit=-1
+Content-Type: application/json

@@ -1,0 +1,5 @@
+@baseUrl = http://localhost:8083/api
+@token = x90UL3rtDPJezVIQAAbWyYG8BsuS
+
+POST {{baseUrl}}/token
+Content-Type: application/json

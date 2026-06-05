@@ -1,0 +1,5 @@
+.env
+tmp/
+docs/
+build/
+app.db

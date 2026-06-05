@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:8080/api
+@token = 7YnJUgC57bMiqdtv7Rxym1cAHSpT
+
+### Create Encounter
+POST {{baseUrl}}/encounters
+Content-Type: application/json
+
+{
+  "identifier_value": "P20395975867",
+  "subject_id": "Patient/12300000000010",
+  "location_id": "Location/556e4d8d-6e73-45a2-8283-b73374634c43",
+  "practitioner_id": "Practitioner/N10008465328",
+  "start_time": "2022-06-14T07:00:00+07:00"
+}
+
+### Get Encounter by ID
+GET {{baseUrl}}/encounters/de122fc5-3aa8-4d37-84a5-244e969c8164
+Content-Type: application/json
+
+### Update Encounter Status (InProgress)
+PUT {{baseUrl}}/encounters/de122fc5-3aa8-4d37-84a5-244e969c8164
+Content-Type: application/json
+
+{
+  "status": "in-progress"
+}
+
+### Update Encounter Status (Finished)
+PUT {{baseUrl}}/encounters/de122fc5-3aa8-4d37-84a5-244e969c8164
+Content-Type: application/json
+
+{
+  "status": "finished"
+}
